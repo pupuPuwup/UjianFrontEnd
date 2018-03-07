@@ -1,21 +1,30 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import axios from 'axios';
+import Form from './components/Form';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+  constructor(){
+    super();
+    this.state = {
+      search: '',
+      data: []
+    }
   }
+  getData = team => 
+    axios.get('https://www.thesportsdb.com/api/v1/json/1/searchplayers.php?t=${team}')
+    .then(res => this.setState({data: res.data.player}))
+    .catch(err => console.log(err))
+  render = () => 
+    <div id="app">
+      <div className="form-group">
+        <h1>{`Daftar Pemain ${this.state.search}`}</h1>
+        <input onChange={() => this.setState({search: this.refs.search.value})}className="form-control" type="text" ref="search"/>
+        <button onClick={() => this.getData(this.refs.search.value)} className="btn btn-success">Lihat Daftar</button>
+      </div>
+      <div id="display">
+        {this.state.data.map(x => <List key={x.idPlayer} {...x}/>)}
+      </div>
+  </div>
 }
 
 export default App;
