@@ -1,0 +1,16 @@
+.app {
+    background: url('vespa.jpg');
+    background-repeat:repeat;
+    height: 1000px;
+}
+
+.huruf {
+    color: white;
+}
+
+.gambar {
+    float: left;
+    height: 200px;
+    width: 200px;
+    padding-right: 10px;
+}
